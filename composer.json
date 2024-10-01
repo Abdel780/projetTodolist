@@ -1,17 +1,17 @@
 {
-    "name": "edw_2425/todo-list",
+    "name": "edw_2425/todolist",
     "autoload": {
-        "psr-4": {
-            "App`\\": "src/",
-            "Config\\": "config/"
-        }
-    },
+		"psr-4": {
+			"App\\": "src/",
+			"Config\\": "config/"
+		}
+	},
     "authors": [
         {
             "name": "Abdel"
         }
     ],
     "require": {
-        "ext-pdo": "*"
-    }
+		"ext-pdo": "*"
+	}
 }
