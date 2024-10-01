@@ -13,7 +13,7 @@ class ComposerStaticInitc9bda0b402352a776f2c372d12897167
         ),
         'A' => 
         array (
-            'App`\\' => 5,
+            'App\\' => 4,
         ),
     );
 
@@ -22,7 +22,7 @@ class ComposerStaticInitc9bda0b402352a776f2c372d12897167
         array (
             0 => __DIR__ . '/../..' . '/config',
         ),
-        'App`\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

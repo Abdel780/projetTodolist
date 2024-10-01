@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'edw_2425/todo-list',
+        'name' => 'edw_2425/todolist',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
@@ -10,7 +10,7 @@
         'dev' => true,
     ),
     'versions' => array(
-        'edw_2425/todo-list' => array(
+        'edw_2425/todolist' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
             'reference' => null,
