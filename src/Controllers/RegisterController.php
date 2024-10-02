@@ -11,13 +11,14 @@ class RegisterController extends AbstractController
             $this->check('mail', $_POST['mail']);
             $this->check('password', $_POST['password']);
             $this->check('idRole', $_POST['idRole']);
+            
             if (empty($this->arrayError)) {
                 $pseudo = htmlspecialchars($_POST['pseudo']);
                 $mail = htmlspecialchars($_POST['mail']);
                 $password = htmlspecialchars($_POST['password']);
                 $id_role = htmlspecialchars($_POST['idRole']);
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                $user = new User(null, $pseudo, $mail, $passwordHash, $id_role);
+                $user = new User(null, $pseudo, $mail, $passwordHash, null, $id_role);
                 $user->save();
                 $this->redirectToRoute('/');
             }

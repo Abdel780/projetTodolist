@@ -10,19 +10,23 @@ class ConnectionController extends AbstractController
         if (isset($_POST['mail'], $_POST['password'])) {
             $this->check('mail', $_POST['mail']);
             $this->check('password', $_POST['password']);
+
             if (empty($this->arrayError)) {
                 $mail = htmlspecialchars($_POST['mail']);
                 $password = htmlspecialchars($_POST['password']);
-                $user = new User(null, null, $mail, $password, null);
+                $user = new User(null, null, $mail, $password, null, null);
                 $responseGetUser = $user->login($mail);
+
                 if ($responseGetUser) {
                     $passwordUser = $responseGetUser->getPassword();
+
                     if (password_verify($password, $passwordUser)) {
                         $_SESSION['user'] = [
                             'id' => uniqid(),
                             'mail' => $responseGetUser->getMail(),
                             'pseudo' => $responseGetUser->getPseudo(),
                             'idUser' => $responseGetUser->getId(),
+                            'socre' => $responseGetUser->getScore(),
                             'idRole' => $responseGetUser->getId_role()
                         ];
                         $this->redirectToRoute('/');
