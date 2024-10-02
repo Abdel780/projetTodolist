@@ -1,5 +1,6 @@
 <?php
 require "vendor/autoload.php";
+session_start();
 
 use Config\Router;
 
@@ -10,6 +11,8 @@ $router = new Router();
  */
 $router->addRoute('/', 'HomeController', 'index');
 $router->addRoute('/register', 'RegisterController', 'index');
+$router->addRoute('/connection', 'ConnectionController', 'index');
+$router->addRoute('/logout', 'LogoutController', 'logout');
 
 $router->handleRequest();
 

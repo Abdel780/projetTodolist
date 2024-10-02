@@ -24,15 +24,22 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                         </li>
+                        <?php
+                    if (isset($_SESSION['user'])) {
+                    ?>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/deconnexion"><i class="fa-solid fa-circle-plus"></i> Deconnexion</a>
+                            <a class="nav-link" href="/logout">Déconnexion</a>
+                        </li>
+                    <?php
+                    } else {
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/register"><i class="fa-solid fa-circle-plus"></i> Inscription</a>
+                            <a class="nav-link" href="/connection">Connexion</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/connexion"><i class="fa-solid fa-circle-plus"></i> Connexion</a>
-                        </li>
+                    <?php } ?>
                 </div>
             </div>
         </nav>
