@@ -9,6 +9,7 @@ require_once(__DIR__ . '/../partials/head.php');
     <p>Points : <?= $myTask->getPoint() ?></p>
     <p>Assigné à : <?= $myTask->getPseudo() ? $myTask->getPseudo() : '🤷‍♀️ personne' ?></p>
 </div>
+
 <?php
 require_once(__DIR__ . '/../partials/footer.php')
 ?>
