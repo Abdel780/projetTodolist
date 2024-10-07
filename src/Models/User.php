@@ -45,7 +45,21 @@ class User
             return null;
         }
     }
-    
+
+    public function getUserById()
+    {
+        $pdo = DataBase::getConnection();
+        $sql = "SELECT * FROM `user` WHERE `id` = ?";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([$this->id]);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            return new User($row['id'], $row['pseudo'], $row['mail'], $row['password'], $row['score'], $row['id_role']);
+        } else {
+            return null;
+        }
+    }
+
     public function getId(): ?int
     {
         return $this->id;
