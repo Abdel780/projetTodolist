@@ -101,4 +101,24 @@ class TaskController extends AbstractController
             $this->redirectToRoute('/');
         }
     }
+
+    public function deleteTask()
+    {
+        if (isset($_POST['id'])) {
+            $idTask = htmlspecialchars($_POST['id']);
+            $task = new Task($idTask, null, null, null, null, null, null, null, null, null);
+            $task->deleteTask();
+            $this->redirectToRoute('/');
+        }
+    }
+    public function deleteTaskAndTodo()
+    {
+        if (isset($_POST['id'])) {
+            $idTask = htmlspecialchars($_POST['id']);
+            $task = new Task($idTask, null, null, null, null, null, null, null, null, null);
+            $task->deleteTodo();
+            $task->deleteTask();
+            $this->redirectToRoute('/');
+        }
+    }
 }
