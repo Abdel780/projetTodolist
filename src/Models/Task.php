@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Config\DataBase;
@@ -16,8 +17,10 @@ class Task
     protected ?int $id_user;
     protected ?string $status;
     protected ?string $pseudo;
+    protected ?int $idKid;
 
-    public function __construct(?int $id, ?string $title, ?string $content, ?string $creation_date, ?string $start_task, ?string $stop_task, ?int $point, ?int $id_user, ?string $status, ?string $pseudo)
+
+    public function __construct(?int $id, ?string $title, ?string $content, ?string $creation_date, ?string $start_task, ?string $stop_task, ?int $point, ?int $id_user, ?string $status, ?string $pseudo, ?int $idKid)
     {
         $this->id = $id;
         $this->title = $title;
@@ -29,6 +32,7 @@ class Task
         $this->id_user = $id_user;
         $this->status = $status;
         $this->pseudo = $pseudo;
+        $this->idKid = $idKid;
     }
 
     public function addTask(): bool
@@ -53,11 +57,12 @@ class Task
         $resultFetch = $statement->fetchAll(PDO::FETCH_ASSOC);
         $tasks = [];
         foreach ($resultFetch as $row) {
-            $task = new Task($row['id'], $row['title'], null, null, $row['start_task'], $row['stop_task'], null, null, null, null);
+            $task = new Task($row['id'], $row['title'], null, null, $row['start_task'], $row['stop_task'], null, null, null, null, null);
             $tasks[] = $task;
         }
         return $tasks;
     }
+
     public function assignedFutureTask()
     {
         $pdo = DataBase::getConnection();
@@ -73,7 +78,7 @@ class Task
         $resultFetch = $statement->fetchAll(PDO::FETCH_ASSOC);
         $tasks = [];
         foreach ($resultFetch as $row) {
-            $task = new Task($row['id'], $row['title'], null, null, $row['start_task'], $row['stop_task'], null, null, null, $row['pseudo']);
+            $task = new Task($row['id'], $row['title'], null, null, $row['start_task'], $row['stop_task'], null, null, null, $row['pseudo'], null);
             $tasks[] = $task;
         }
         return $tasks;
@@ -87,7 +92,7 @@ class Task
         $statement->execute([$this->id]);
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         if ($row) {
-            return new Task($row['id'], $row['title'], $row['content'], $row['creation_date'], $row['start_task'], $row['stop_task'], $row['point'], $row['id_user'], $row['status'], $row['pseudo']);
+            return new Task($row['id'], $row['title'], $row['content'], $row['creation_date'], $row['start_task'], $row['stop_task'], $row['point'], $row['id_user'], $row['status'], $row['pseudo'], null);
         } else {
             return null;
         }
@@ -110,6 +115,7 @@ class Task
         $statement = $pdo->prepare($sql);
         return $statement->execute([$this->id]);
     }
+
     public function deleteTodo()
     {
         $pdo = DataBase::getConnection();
@@ -117,23 +123,39 @@ class Task
         $statement = $pdo->prepare($sql);
         return $statement->execute([$this->id]);
     }
-    
+
+    public function addTodo()
+    {
+        $pdo = DataBase::getConnection();
+        $sql = "INSERT INTO `todo` (`status`, `id_user`, `id_task`) VALUES (?,?,?)";
+        $statement = $pdo->prepare($sql);
+        return $statement->execute([$this->status, $this->idKid, $this->id]);
+    }
+
+    public function updateTodo()
+    {
+        $pdo = DataBase::getConnection();
+        $sql = "UPDATE `todo` SET `todo`.`status` = ?, `todo`.`id_user` = ? WHERE `todo`.`id_task`= ?";
+        $statement = $pdo->prepare($sql);
+        return $statement->execute([$this->status, $this->idKid, $this->id]);
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
+
     public function getTitle(): ?string
     {
         return $this->title;
     }
+
     public function getContent(): ?string
     {
         return $this->content;
     }
+
     public function getCreationDate(): ?string
     {
         return $this->creation_date;
@@ -146,17 +168,30 @@ class Task
     {
         return $this->stop_task;
     }
+
     public function getPoint(): ?int
     {
         return $this->point;
     }
+
     public function getIdUser(): ?int
     {
         return $this->id_user;
     }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
     public function getPseudo(): ?string
     {
         return $this->pseudo;
+    }
+
+    public function getIdKid(): ?int
+    {
+        return $this->idKid;
     }
 
     public function setId(?int $id): static
@@ -164,49 +199,64 @@ class Task
         $this->id = $id;
         return $this;
     }
-    public function setPseudo(?string $pseudo): static
-    {
-        $this->pseudo = $pseudo;
-        return $this;
-    }
+
     public function setTitle(?string $title): static
     {
         $this->title = $title;
         return $this;
     }
+
     public function setContent(?string $content): static
     {
         $this->content = $content;
         return $this;
     }
+
     public function setCreationDate(?string $creation_date): static
     {
         $this->creation_date = $creation_date;
         return $this;
     }
+
     public function setStartTask(?string $start_task): static
     {
         $this->start_task = $start_task;
         return $this;
     }
+
     public function setStopTask(?string $stop_task): static
     {
         $this->stop_task = $stop_task;
         return $this;
     }
+
     public function setPoint(?int $point): static
     {
         $this->point = $point;
         return $this;
     }
+
     public function setIdUser(?int $id_user): static
     {
         $this->id_user = $id_user;
         return $this;
     }
+
     public function setStatus(?string $status)
     {
         $this->status = $status;
+        return $this;
+    }
+
+    public function setPseudo(?string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+        return $this;
+    }
+
+    public function setIdKid(?int $idKid): static
+    {
+        $this->idKid = $idKid;
         return $this;
     }
 }

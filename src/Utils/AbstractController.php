@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Utils;
+
 abstract class AbstractController
 {
     protected array $arrayError = [];
@@ -20,6 +22,7 @@ abstract class AbstractController
     public function checkFormat($nameInput, $value)
     {
         $regexName = '/^[a-zA-Zà-üÀ-Ü -]{2,255}$/';
+        $regexName = '/^[a-zA-Zà-üÀ-Ü -_]{2,255}$/';
         $regexPassword = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/';
         $regexTitle = '/^[a-zA-Zà-üÀ-Ü0-9 #?!@$%^,.;&*-]{4,255}$/';
         $regexContent = '/^[a-zA-Zà-üÀ-Ü0-9 #?!@$%^,.;&*-]{4,}$/';
@@ -62,21 +65,31 @@ abstract class AbstractController
                     $this->arrayError['idRole'] = 'Merci de renseigner un role correcte!';
                 }
                 break;
-                case 'start_task':
-                    if (!preg_match($regexDateTime, $value)) {
-                        $this->arrayError['start_task'] = 'Merci de renseigner une date et heure correcte!';
-                    }
-                    break;
-                case 'stop_task':
-                    if (!preg_match($regexDateTime, $value)) {
-                        $this->arrayError['stop_task'] = 'Merci de renseigner une date et heure correcte!';
-                    }
-                    break;
-                case 'point':
-                    if (!preg_match($regexPoint, $value)) {
-                        $this->arrayError['point'] = 'Merci de renseigner un nombre de point/s correcte!';
-                    }
-                    break;
+            case 'start_task':
+                if (!preg_match($regexDateTime, $value)) {
+                    $this->arrayError['start_task'] = 'Merci de renseigner une date et heure correcte!';
+                }
+                break;
+            case 'stop_task':
+                if (!preg_match($regexDateTime, $value)) {
+                    $this->arrayError['stop_task'] = 'Merci de renseigner une date et heure correcte!';
+                }
+                break;
+            case 'point':
+                if (!preg_match($regexPoint, $value)) {
+                    $this->arrayError['point'] = 'Merci de renseigner un nombre de point/s correcte!';
+                }
+                break;
+            case 'kid':
+                if (!preg_match($regexPoint, $value)) {
+                    $this->arrayError['kid'] = 'Merci de renseigner un enfant correcte!';
+                }
+                break;
+            case 'status':
+                if (!preg_match($regexName, $value)) {
+                    $this->arrayError['status'] = 'Merci de renseigner un status correcte!';
+                }
+                break;
         }
     }
     public function check($nameInput, $value)
